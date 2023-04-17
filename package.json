@@ -1,0 +1,19 @@
+{
+  "name": "flickfeed-be",
+  "version": "1.0.0",
+  "description": "FlickFeed에 필요한 백엔드 API 구현 (Express 사용)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nevacat/FlickFeed-BE.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nevacat/FlickFeed-BE/issues"
+  },
+  "homepage": "https://github.com/Nevacat/FlickFeed-BE#readme"
+}
