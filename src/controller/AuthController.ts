@@ -4,12 +4,15 @@ import { User } from '../entity/User';
 import { generateAccessToken, generatePassword, generateRefreshToken } from '../util/Auth';
 import { verify } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { JwtRequest } from '../middleware/AuthMiddleware';
 
 interface MulterS3Request extends Request {
   file: Express.MulterS3.File;
 }
 
-export class UserController {
+export class AuthController {
+
+  // 회원가입
   static register = async (req: MulterS3Request, res: Response) => {
     // 유저가 입력한 정보를 빼오자.
     const { username, email, password, userInfo } = req.body;
@@ -39,6 +42,8 @@ export class UserController {
     res.cookie('refreshToken', refreshToken, { path: '/', httpOnly: true, maxAge: 3000 * 24 * 30 * 1000 });
     res.send({ content: decoded, accessToken, refreshToken });
   };
+
+  // 로그인
   static login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const user = await myDataBase.getMongoRepository(User).findOne({
@@ -51,8 +56,36 @@ export class UserController {
     }
     const accessToken = generateAccessToken(user.id, user.username, user.email);
     const refreshToken = generateRefreshToken(user.id, user.username, user.email);
-    const decoded = verify(accessToken, process.env.SECRET_ATOKEN )
-    res.cookie('refreshToken', refreshToken,{path:'/', httpOnly:true,maxAge:3600*24*30*1000})
-    res.send({content: decoded, accessToken})
+    const decoded = verify(accessToken, process.env.SECRET_ATOKEN);
+    res.cookie('refreshToken', refreshToken, { path: '/', httpOnly: true, maxAge: 3600 * 24 * 30 * 1000 });
+    res.send({ content: decoded, accessToken });
   };
+
+  // 인증확인
+  static me = async (req: JwtRequest, res: Response) => {
+    const {id: userId} = req.decoded
+    try {
+      const user = await myDataBase.getRepository(User).findOne({ where: { id: userId },
+        select:{
+          username:true,
+          userImg:true,
+          userInfo:true
+        }
+      });
+      if (!user) {
+        return res.status(404).json({ error: '사용자를 찾을 수 없습니다.' });
+      }
+      return res.status(200).json({ user });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: '사용자 정보를 가져올 수 없습니다.' });
+    }
+  };
+
+  // 로그아웃
+  static logout = async (req: Request, res: Response) => {
+    res.clearCookie('retreshToken', { path: '/' });
+    res.status(200).send({ message: '로그아웃 되었습니다!' });
+  };
+
 }
