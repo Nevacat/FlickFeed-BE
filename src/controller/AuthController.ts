@@ -15,8 +15,8 @@ export class AuthController {
   // 회원가입
   static register = async (req: MulterS3Request, res: Response) => {
     // 유저가 입력한 정보를 빼오자.
-    const { username, email, password, userInfo } = req.body;
-    const { location } = req.file;
+    const { username, email, password, userInfo = '' } = req.body;
+    const { location = '' } = req.file || {};
     // 유저의 정보에서 중복되는 사항이 없는지 확인하자
     const existUser = await myDataBase.getRepository(User).findOne({
       where: [{ username }, { email }],
@@ -40,13 +40,13 @@ export class AuthController {
     const decoded = verify(accessToken, process.env.SECRET_ATOKEN);
     // 토큰 쿠키 옵션
     res.cookie('refreshToken', refreshToken, { path: '/', httpOnly: true, maxAge: 3000 * 24 * 30 * 1000 });
-    res.send({ content: decoded, accessToken, refreshToken });
+    res.status(201).send({ content: decoded, accessToken, refreshToken});
   };
 
   // 로그인
   static login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
-    const user = await myDataBase.getMongoRepository(User).findOne({
+    const user = await myDataBase.getRepository(User).findOne({
       where: { email },
     });
     const validPassword = await bcrypt.compare(password, user.password);
