@@ -3,6 +3,7 @@ import { myDataBase } from './db';
 import cors from 'cors';
 import { upload } from './uploadS3';
 import AuthRouter from './router/auth'
+import UserRouter from './router/user'
 
 export const tokenList = {};
 
@@ -24,18 +25,7 @@ app.use(
   })
 );
 app.use('/auth',AuthRouter)
-
-app.post(
-  '/upload',
-  upload.fields([
-    { name: 'userImg', maxCount: 1 },
-    { name: 'postImg', maxCount: 1 },
-  ]),
-  (req, res) => {
-    res.json(req.file).send('파일이 정상적으로 업로드 되었습니다.');
-  }
-);
-
+app.use('/',UserRouter)
 app.listen(3000, () => {
   console.log('Express server has started on port 3000');
 });
