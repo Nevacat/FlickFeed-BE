@@ -2,6 +2,7 @@ import express from 'express';
 import { myDataBase } from './db';
 import cors from 'cors';
 import { upload } from './uploadS3';
+import AuthRouter from './router/auth'
 
 export const tokenList = {};
 
@@ -16,12 +17,13 @@ myDataBase
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 app.use(
   cors({
     origin: true, // 모두 허용
   })
 );
+app.use('/auth',AuthRouter)
 
 app.post(
   '/upload',
