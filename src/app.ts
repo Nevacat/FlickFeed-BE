@@ -4,7 +4,8 @@ import cors from 'cors';
 import { upload } from './uploadS3';
 import AuthRouter from './router/auth'
 import UserRouter from './router/user'
-
+import PostRouter from './router/post'
+import CommentRouter from './router/comment'
 export const tokenList = {};
 
 myDataBase
@@ -24,8 +25,13 @@ app.use(
     origin: true, // 모두 허용
   })
 );
+
 app.use('/auth',AuthRouter)
 app.use('/',UserRouter)
+app.use('/',PostRouter)
+app.use('/',CommentRouter)
+
+
 app.listen(3000, () => {
   console.log('Express server has started on port 3000');
 });
