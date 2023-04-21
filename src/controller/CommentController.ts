@@ -6,6 +6,7 @@ import { Post } from '../entity/Post';
 import { Comment } from '../entity/Comment';
 
 export class CommentController {
+  // 댓글 생성
   static createComment = async (req: JwtRequest, res: Response) => {
     const { id: userId } = req.decoded;
     const user = await myDataBase.getRepository(User).findOne({
@@ -17,7 +18,6 @@ export class CommentController {
     const post = await myDataBase.getRepository(Post).findOneBy({
       id: postId,
     });
-
     const comment = new Comment();
     comment.content = content;
     comment.post = post;
@@ -30,9 +30,10 @@ export class CommentController {
       console.error(err);
     }
   };
+  // 댓글 삭제
   static deleteComment = async (req:JwtRequest, res:Response) => {
     const {id: userId} = req.decoded
-    const {id:commentId} = req.body
+    const commentId = req.params.id
     const currentComment = await myDataBase.getRepository(Comment).findOne({
       where:{id:commentId},
       relations:{
