@@ -19,6 +19,7 @@ export class UserController {
       res.status(500).json({ error: '사용자 정보를 가져올 수 없습니다.' });
     }
   };
+  // 유저 정보 변경
   static updateUser =async (req:JwtRequest, res:Response) => {
     const {username, userInfo} = req.body
     const {id: userId} = req.decoded
