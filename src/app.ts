@@ -1,7 +1,6 @@
 import express from 'express';
 import { myDataBase } from './db';
 import cors from 'cors';
-import { upload } from './uploadS3';
 import AuthRouter from './router/auth'
 import UserRouter from './router/user'
 import PostRouter from './router/post'
@@ -30,7 +29,6 @@ app.use('/auth',AuthRouter)
 app.use('/',UserRouter)
 app.use('/',PostRouter)
 app.use('/',CommentRouter)
-
 
 app.listen(3000, () => {
   console.log('Express server has started on port 3000');
