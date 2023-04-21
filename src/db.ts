@@ -8,7 +8,7 @@ export const myDataBase = new DataSource({
     port: 3306,
     username: "admin",
     password: process.env.DATABASE_PASSWORD,
-    database: "flickfeed", 
+    database: "flickfeed1", 
     entities: ["src/entity/*.ts"],
     logging: true,
     synchronize: true,
