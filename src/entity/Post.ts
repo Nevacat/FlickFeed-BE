@@ -5,8 +5,8 @@ import { Comment } from "./Comment";
 
 @Entity()
 export class Post{
-  @PrimaryGeneratedColumn()
-  id:number
+  @PrimaryGeneratedColumn('uuid')
+  id:string
   @Column()
   place: string
   @Column()

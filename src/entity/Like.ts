@@ -4,8 +4,9 @@ import { User } from './User';
 
 @Entity()
 export class Like {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+  
   @ManyToOne(() => Post, (post) => post.likes, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   post: Post;
 

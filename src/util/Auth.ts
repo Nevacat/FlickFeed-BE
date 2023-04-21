@@ -9,7 +9,7 @@ export const generatePassword =async (pw:string) => {
   return password
 }
 
-export const generateAccessToken = (id: number, username: string, email:string) => {
+export const generateAccessToken = (id: string, username: string, email:string) => {
   return jwt.sign(
     {id: id, username: username, email:email},
     process.env.SECRET_ATOKEN,
@@ -18,7 +18,7 @@ export const generateAccessToken = (id: number, username: string, email:string) 
     }
   )
 }
-export const generateRefreshToken = (id: number, username: string, email:string) => {
+export const generateRefreshToken = (id: string, username: string, email:string) => {
   return jwt.sign(
     {id: id, username: username, email:email},
     process.env.SECRET_ATOKEN,

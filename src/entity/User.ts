@@ -5,8 +5,8 @@ import { Like } from "./Like";
 
 @Entity()
 export class User{
-  @PrimaryGeneratedColumn()
-  id: number
+  @PrimaryGeneratedColumn('uuid')
+  id: string
   @Column({unique: true})
   username: string
   @Column({unique: true})

@@ -4,7 +4,7 @@ import { verify } from "jsonwebtoken"
 export interface TokenPayload {
   email: string,
   username: string,
-  id:number,
+  id:string,
 }
 
 export interface JwtRequest extends Request {
