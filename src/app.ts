@@ -1,10 +1,13 @@
-import express from 'express';
+import express from 'express'
 import { myDataBase } from './db';
 import cors from 'cors';
 import AuthRouter from './router/auth'
 import UserRouter from './router/user'
 import PostRouter from './router/post'
 import CommentRouter from './router/comment'
+import dotenv from 'dotenv'
+dotenv.config()
+
 export const tokenList = {};
 
 myDataBase
@@ -21,15 +24,18 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(
   cors({
-    origin: true, // 모두 허용
+    origin: [/^http:\/\/localhost(?::\d+)?$/,'http://myfron-env.eba-uvx9t8hw.ap-northeast-2.elasticbeanstalk.com'],
+    credentials: true
   })
 );
 
 app.use('/auth',AuthRouter)
-app.use('/',UserRouter)
-app.use('/',PostRouter)
-app.use('/',CommentRouter)
+app.use('/users',UserRouter)
+app.use('/posts',PostRouter)
+app.use('/comment',CommentRouter)
 
-app.listen(3000, () => {
-  console.log('Express server has started on port 3000');
+const port = process.env.PORT || 3000;
+
+app.listen(port, function() {
+  console.log('Express server has started on ' + port);
 });

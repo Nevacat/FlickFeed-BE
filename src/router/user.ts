@@ -4,7 +4,7 @@ import { AuthMiddleware } from "../middleware/AuthMiddleware";
 
 const routes = Router()
 
-routes.get('/users',UserController.allUser)
-routes.put('/users',AuthMiddleware.verifyToken,UserController.updateUser)
+routes.get('',UserController.allUser)
+routes.put('',AuthMiddleware.verifyToken,UserController.updateUser)
 
 export default routes
