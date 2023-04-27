@@ -5,9 +5,11 @@ import { upload } from "../uploadS3";
 
 const routes = Router()
 
-routes.post('/posts', AuthMiddleware.verifyToken,upload.single("postImg") ,PostController.createPost)
-routes.get('/posts', PostController.getPosts)
-routes.get('/posts/me', PostController.getUserPost)
-routes.get('/posts/:id', PostController.getPost)
-routes.post('/posts/:id', AuthMiddleware.verifyToken, PostController.likePost)
+routes.post('', AuthMiddleware.verifyToken,upload.single("postImg") ,PostController.createPost)
+routes.get('', PostController.getPosts)
+routes.get('/me',AuthMiddleware.verifyToken ,PostController.getUserPost)
+routes.get('/:id', PostController.getPost)
+routes.post('/:id', AuthMiddleware.verifyToken, PostController.likePost)
+routes.delete('/:id', AuthMiddleware.verifyToken, PostController.deletePost)
+
 export default routes
