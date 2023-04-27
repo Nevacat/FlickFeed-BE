@@ -5,6 +5,9 @@ import { generateAccessToken, generatePassword, generateRefreshToken } from '../
 import { verify } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { JwtRequest } from '../middleware/AuthMiddleware';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 interface MulterS3Request extends Request {
   file: Express.MulterS3.File;
@@ -40,7 +43,7 @@ export class AuthController {
     const decoded = verify(accessToken, process.env.SECRET_ATOKEN);
     // 토큰 쿠키 옵션
     res.cookie('refreshToken', refreshToken, { path: '/', httpOnly: true, maxAge: 3000 * 24 * 30 * 1000 });
-    res.status(201).send({ content: decoded, accessToken, refreshToken});
+    res.status(201).send({ content: decoded, accessToken});
   };
 
   // 로그인
