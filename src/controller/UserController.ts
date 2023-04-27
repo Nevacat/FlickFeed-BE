@@ -8,7 +8,7 @@ export class UserController {
   static allUser = async (req: Request, res: Response) => {
     try {
       const users = await myDataBase.getRepository(User).find({
-        select: ['username', 'userImg'],
+        select: ['id' ,'username', 'userImg'],
       });
       if (!users || users.length === 0) {
         return res.status(404).json({ error: '사용자가 존재하지 않습니다.' });
