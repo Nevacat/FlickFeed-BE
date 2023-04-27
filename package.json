@@ -4,9 +4,10 @@
   "description": "FlickFeed에 필요한 백엔드 API 구현 (Express 사용)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec ts-node src/app.ts",
-    "build": "tsc"
+    "dev": "nodemon --exec ts-node src/app.ts",
+    "build": "tsc",
+    "start": "NODE_ENV=production node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",

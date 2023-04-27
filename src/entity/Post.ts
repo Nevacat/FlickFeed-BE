@@ -17,7 +17,7 @@ export class Post{
   author: User
   @OneToMany(()=>Comment, comment=>comment.post)
   comments: Comment[]
-  @OneToMany(()=>Like, like=>like.post)
+  @OneToMany(()=>Like, like=>like.post,{cascade:true, onDelete:'CASCADE'})
   likes: Like[]
   @CreateDateColumn()
   createAt : Date
